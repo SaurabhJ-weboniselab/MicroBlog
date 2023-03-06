@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
   def index
     @post = Post.all
   end
 
   def show
-    @post = Post.friendly.find(params[:id])
+    @post = set_post
   end
 
   def new
@@ -12,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    @post = set_post
   end
 
   def create
@@ -27,14 +29,14 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
+    @post = set_post
     @post.destroy
 
     redirect_to root_path, status: :see_other
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = set_post
 
     if @post.update(post_params)
       redirect_to @post
@@ -45,5 +47,11 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body)
+  end
+
+  private
+
+  def set_post
+    @post = Post.friendly.find(params[:id])
   end
 end
