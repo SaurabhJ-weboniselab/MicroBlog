@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_06_101358) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_13_133202) do
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_authors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_authors_on_reset_password_token", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -28,7 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_101358) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.boolean "is_published", default: false
+    t.integer "author_id"
+    t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "posts", "authors"
 end
