@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :authors
   root 'posts#index'
   resources :posts do
     resources :comments

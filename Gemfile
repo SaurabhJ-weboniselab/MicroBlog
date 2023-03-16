@@ -7,6 +7,16 @@ ruby '3.2.0'
 
 gem 'friendly_id', '~> 5.4.0'
 
+gem 'devise'
+
+# Run against this stable release
+group :development, :test do
+  gem 'rspec-rails', '~> 6.0.0'
+end
+
+# Or, run against the main branch
+# (requires main-branch versions of all related RSpec libraries)
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'
 
